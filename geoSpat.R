@@ -48,23 +48,17 @@ st_write(cHR$homerange, "C:\\Users\\Jawor\\Desktop\\TBS_2026\\hr95_LagothrixD_20
 
 create_hr_grid <- function(hr_sf, interval = 250) {
   
-  # Get the bounding box of the home range
   hr_bbox <- st_bbox(hr_sf)
   
-  # Create a sequence of x and y coordinates at 250m intervals
   x_coords <- seq(from = hr_bbox["xmin"], to = hr_bbox["xmax"], by = interval)
   y_coords <- seq(from = hr_bbox["ymin"], to = hr_bbox["ymax"], by = interval)
   
-  # Create a grid of all combinations
   grid_coords <- expand.grid(x = x_coords, y = y_coords)
   
-  # Convert to sf points object (same CRS as home range - UTM Zone 18S)
   grid_pts <- st_as_sf(grid_coords, coords = c("x", "y"), crs = 32718)
   
-  # Clip to only points that fall WITHIN the home range polygon
   grid_pts_clipped <- grid_pts[st_within(grid_pts, hr_sf, sparse = FALSE), ]
   
-  # Add point ID and extract coordinates into the sf object
   grid_pts_clipped <- grid_pts_clipped |>
     mutate(
       point_id = row_number(),
@@ -73,7 +67,6 @@ create_hr_grid <- function(hr_sf, interval = 250) {
     ) |>
     select(point_id, utm_x, utm_y, geometry)
   
-  # Build a plain dataframe (no geometry) with ID and coordinates
   grid_df <- grid_pts_clipped |>
     st_drop_geometry() |>
     select(point_id, utm_x, utm_y)
@@ -81,23 +74,14 @@ create_hr_grid <- function(hr_sf, interval = 250) {
   return(list(spatial = grid_pts_clipped, dataframe = grid_df))
 }
 
-# Generate the grid
 hr_grid <- create_hr_grid(cHR$homerange, interval = 250)
 
-# Access the sf spatial object and plain dataframe separately
 hr_grid_sf <- hr_grid$spatial
 hr_grid_df <- hr_grid$dataframe
 
-# Optional: preview
 mapview(cHR$homerange, col.regions = "tan4", alpha.regions = 0.3) +
   mapview(hr_grid_sf, cex = 2, color = "black", col.regions = "black", layer.name = "250m Grid Points")
 
-# Export spatial object as GeoJSON for QGIS
-st_write(hr_grid_sf,
-         "C:\\Users\\Jawor\\Desktop\\TBS_2026\\hr_grid_250m_LagothrixD.geojson",
-         driver = "GeoJSON")
+st_write(hr_grid_sf, "C:\\Users\\Jawor\\Desktop\\TBS_2026\\hr_grid_250m_LagothrixD.geojson", driver = "GeoJSON")
 
-# Optional: export the dataframe as a CSV
-write.csv(hr_grid_df,
-          "C:\\Users\\Jawor\\Desktop\\TBS_2026\\hr_grid_250m_LagothrixD_coords.csv",
-          row.names = FALSE)
+write.csv(hr_grid_df, "C:\\Users\\Jawor\\Desktop\\TBS_2026\\hr_grid_250m_LagothrixD_coords.csv", row.names = FALSE)
