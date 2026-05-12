@@ -42,8 +42,8 @@ viewHR <- function(df, trailsDF, riverDF, groupID, HRcolor, elevation = c("Y", "
 
 
 
-cHR <- viewHR(combined_df, trails, river, "D", "tan4")
-cHR$map
+DHR <- viewHR(combined_df, trails, river, "D", "tan4")
+DHR$map
 st_write(cHR$homerange, "C:\\Users\\Jawor\\Desktop\\TBS_2026\\hr95_LagothrixD_2014to2018.geojson", driver = "GeoJSON")
 
 create_hr_grid <- function(hr_sf, interval = 250) {
@@ -74,14 +74,37 @@ create_hr_grid <- function(hr_sf, interval = 250) {
   return(list(spatial = grid_pts_clipped, dataframe = grid_df))
 }
 
-hr_grid <- create_hr_grid(cHR$homerange, interval = 250)
+hr_grid <- create_hr_grid(DHR$homerange, interval = 250)
 
 hr_grid_sf <- hr_grid$spatial
 hr_grid_df <- hr_grid$dataframe
 
-mapview(cHR$homerange, col.regions = "tan4", alpha.regions = 0.3) +
+trail_layer <- mapview(trails, color = "orange", layer.name = "Trails", lwd = 2)
+river_layer <- mapview(river, color = "blue", layer.name = "River", lwd = 2)
+
+grid <- mapview(DHR$homerange, col.regions = "tan4", alpha.regions = 0.3) +
   mapview(hr_grid_sf, cex = 2, color = "black", col.regions = "black", layer.name = "250m Grid Points")
 
+map <- grid + trail_layer + river_layer
 st_write(hr_grid_sf, "C:\\Users\\Jawor\\Desktop\\TBS_2026\\hr_grid_250m_LagothrixD.geojson", driver = "GeoJSON")
 
 write.csv(hr_grid_df, "C:\\Users\\Jawor\\Desktop\\TBS_2026\\hr_grid_250m_LagothrixD_coords.csv", row.names = FALSE)
+
+
+##UTM to lat lon##
+points <- read_csv(file.choose())
+
+df_sf <- points |>
+  st_as_sf(coords = c("utmX", "utmY"), crs = 32718) |>
+  st_transform(crs = 4326)  # WGS84 lat/lon
+
+# Extract coordinates and mutate back into the original data frame
+df_latlon <- points |>
+  mutate(
+    lon = st_coordinates(df_sf)[, 1],
+    lat = st_coordinates(df_sf)[, 2]
+  )
+
+write.csv(df_latlon, "C:\\Users\\Jawor\\Desktop\\TBS_2026\\DeviceWaypoints_utmLatLon.csv")
+
+
