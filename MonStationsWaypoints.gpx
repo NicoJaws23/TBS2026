@@ -1,0 +1,306 @@
+<?xml version="1.0"?>
+<gpx version="1.1" creator="GDAL 3.8.4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ogr="http://osgeo.org/gdal" xmlns="http://www.topografix.com/GPX/1/1" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+<metadata>
+<bounds minlat="-0.631121000000000" minlon="-76.152296000000007" maxlat="-0.623890000000000" maxlon="-76.142863000000006"/>                                     
+</metadata>
+<wpt lat="-0.630778" lon="-76.14524">
+  <magvar>6.0</magvar>
+  <name>MON01</name>
+  <type>WAYPOINT</type>
+  <extensions>
+    <ogr:ident>MON01</ogr:ident>
+    <ogr:y_proj>9930266.028000000864267</ogr:y_proj>
+    <ogr:x_proj>372562.591100000019651</ogr:x_proj>
+    <ogr:symbol>Flag</ogr:symbol>
+    <ogr:dist>Blue</ogr:dist>
+    <ogr:depth>227.851776</ogr:depth>
+    <ogr:wpt_class>2026/06/07 13:01:54+00</ogr:wpt_class>
+    <ogr:filename>garmin GPSMAP 65 Software Version 460</ogr:filename>
+  </extensions>
+</wpt>
+<wpt lat="-0.630909" lon="-76.142923">
+  <magvar>6.0</magvar>
+  <name>MON02</name>
+  <type>WAYPOINT</type>
+  <extensions>
+    <ogr:ident>MON02</ogr:ident>
+    <ogr:y_proj>9930251.602</ogr:y_proj>
+    <ogr:x_proj>372820.4546</ogr:x_proj>
+    <ogr:symbol>Flag</ogr:symbol>
+    <ogr:dist>Blue</ogr:dist>
+    <ogr:depth>228.368744</ogr:depth>
+    <ogr:wpt_class>2026/06/07 13:32:50+00</ogr:wpt_class>
+    <ogr:filename>garmin GPSMAP 65 Software Version 460</ogr:filename>
+  </extensions>
+</wpt>
+<wpt lat="-0.628646" lon="-76.142863">
+  <magvar>6.0</magvar>
+  <name>MON03</name>
+  <type>WAYPOINT</type>
+  <extensions>
+    <ogr:ident>MON03</ogr:ident>
+    <ogr:y_proj>9930501.782999999821186</ogr:y_proj>
+    <ogr:x_proj>372827.0772</ogr:x_proj>
+    <ogr:symbol>Flag</ogr:symbol>
+    <ogr:dist>Blue</ogr:dist>
+    <ogr:depth>229.91304</ogr:depth>
+    <ogr:wpt_class>2026/06/07 14:05:52+00</ogr:wpt_class>
+    <ogr:filename>garmin GPSMAP 65 Software Version 460</ogr:filename>
+  </extensions>
+</wpt>
+<wpt lat="-0.626264" lon="-76.143046">
+  <magvar>6.0</magvar>
+  <name>MON04</name>
+  <type>WAYPOINT</type>
+  <extensions>
+    <ogr:ident>MON04</ogr:ident>
+    <ogr:y_proj>9930765.115000000223517</ogr:y_proj>
+    <ogr:x_proj>372806.653500000014901</ogr:x_proj>
+    <ogr:symbol>Flag</ogr:symbol>
+    <ogr:dist>Blue</ogr:dist>
+    <ogr:depth>227.663223</ogr:depth>
+    <ogr:wpt_class>2026/06/07 14:33:45+00</ogr:wpt_class>
+    <ogr:filename>garmin GPSMAP 65 Software Version 460</ogr:filename>
+  </extensions>
+</wpt>
+<wpt lat="-0.624087" lon="-76.143182">
+  <magvar>6.0</magvar>
+  <name>MON05</name>
+  <type>WAYPOINT</type>
+  <extensions>
+    <ogr:ident>MON05</ogr:ident>
+    <ogr:y_proj>9931005.784</ogr:y_proj>
+    <ogr:x_proj>372791.4655</ogr:x_proj>
+    <ogr:symbol>Flag</ogr:symbol>
+    <ogr:dist>Blue</ogr:dist>
+    <ogr:depth>223.593201</ogr:depth>
+    <ogr:wpt_class>2026/06/07 14:59:51+00</ogr:wpt_class>
+    <ogr:filename>garmin GPSMAP 65 Software Version 460</ogr:filename>
+  </extensions>
+</wpt>
+<wpt lat="-0.62389" lon="-76.145324">
+  <magvar>6.0</magvar>
+  <name>MON06</name>
+  <type>WAYPOINT</type>
+  <extensions>
+    <ogr:ident>MON06</ogr:ident>
+    <ogr:y_proj>9931027.511</ogr:y_proj>
+    <ogr:x_proj>372553.076</ogr:x_proj>
+    <ogr:symbol>Flag</ogr:symbol>
+    <ogr:dist>Blue</ogr:dist>
+    <ogr:depth>234.340958</ogr:depth>
+    <ogr:wpt_class>2026/06/07 15:36:44+00</ogr:wpt_class>
+    <ogr:filename>garmin GPSMAP 65 Software Version 460</ogr:filename>
+  </extensions>
+</wpt>
+<wpt lat="-0.624237" lon="-76.147827">
+  <magvar>6.0</magvar>
+  <name>MON07</name>
+  <type>WAYPOINT</type>
+  <extensions>
+    <ogr:ident>MON07</ogr:ident>
+    <ogr:y_proj>9930989.087999999523163</ogr:y_proj>
+    <ogr:x_proj>372274.5234</ogr:x_proj>
+    <ogr:symbol>Flag</ogr:symbol>
+    <ogr:dist>Blue</ogr:dist>
+    <ogr:depth>238.370667</ogr:depth>
+    <ogr:wpt_class>2026/06/07 16:11:01+00</ogr:wpt_class>
+    <ogr:filename>garmin GPSMAP 65 Software Version 460</ogr:filename>
+  </extensions>
+</wpt>
+<wpt lat="-0.624267" lon="-76.150014">
+  <magvar>6.0</magvar>
+  <name>MON08</name>
+  <type>WAYPOINT</type>
+  <extensions>
+    <ogr:ident>MON08</ogr:ident>
+    <ogr:y_proj>9930985.718000000342727</ogr:y_proj>
+    <ogr:x_proj>372031.130899999989197</ogr:x_proj>
+    <ogr:symbol>Flag</ogr:symbol>
+    <ogr:dist>Blue</ogr:dist>
+    <ogr:depth>236.281265</ogr:depth>
+    <ogr:wpt_class>2026/06/07 16:51:10+00</ogr:wpt_class>
+    <ogr:filename>garmin GPSMAP 65 Software Version 460</ogr:filename>
+  </extensions>
+</wpt>
+<wpt lat="-0.624334" lon="-76.152021">
+  <magvar>6.0</magvar>
+  <name>MON09</name>
+  <type>WAYPOINT</type>
+  <extensions>
+    <ogr:ident>MON09</ogr:ident>
+    <ogr:y_proj>9930978.262000000104308</ogr:y_proj>
+    <ogr:x_proj>371807.771499999973457</ogr:x_proj>
+    <ogr:symbol>Flag</ogr:symbol>
+    <ogr:dist>Blue</ogr:dist>
+    <ogr:depth>235.198959</ogr:depth>
+    <ogr:wpt_class>2026/06/07 17:15:38+00</ogr:wpt_class>
+    <ogr:filename>garmin GPSMAP 65 Software Version 460</ogr:filename>
+  </extensions>
+</wpt>
+<wpt lat="-0.626224" lon="-76.152296">
+  <magvar>6.0</magvar>
+  <name>MON10</name>
+  <type>WAYPOINT</type>
+  <extensions>
+    <ogr:ident>MON10</ogr:ident>
+    <ogr:y_proj>9930769.311000000685453</ogr:y_proj>
+    <ogr:x_proj>371777.212300000013784</ogr:x_proj>
+    <ogr:symbol>Flag</ogr:symbol>
+    <ogr:dist>Blue</ogr:dist>
+    <ogr:depth>245.511414</ogr:depth>
+    <ogr:wpt_class>2026/06/07 17:38:38+00</ogr:wpt_class>
+    <ogr:filename>garmin GPSMAP 65 Software Version 460</ogr:filename>
+  </extensions>
+</wpt>
+<wpt lat="-0.628875" lon="-76.152169">
+  <magvar>6.0</magvar>
+  <name>MON11</name>
+  <type>WAYPOINT</type>
+  <extensions>
+    <ogr:ident>MON11</ogr:ident>
+    <ogr:y_proj>9930476.239</ogr:y_proj>
+    <ogr:x_proj>371791.410800000012387</ogr:x_proj>
+    <ogr:symbol>Flag</ogr:symbol>
+    <ogr:dist>Blue</ogr:dist>
+    <ogr:depth>231.703064</ogr:depth>
+    <ogr:wpt_class>2026/06/07 18:09:13+00</ogr:wpt_class>
+    <ogr:filename>garmin GPSMAP 65 Software Version 460</ogr:filename>
+  </extensions>
+</wpt>
+<wpt lat="-0.630956" lon="-76.152058">
+  <magvar>6.0</magvar>
+  <name>MON12</name>
+  <type>WAYPOINT</type>
+  <extensions>
+    <ogr:ident>MON12</ogr:ident>
+    <ogr:y_proj>9930246.182</ogr:y_proj>
+    <ogr:x_proj>371803.815</ogr:x_proj>
+    <ogr:symbol>Flag</ogr:symbol>
+    <ogr:dist>Blue</ogr:dist>
+    <ogr:depth>225.920258</ogr:depth>
+    <ogr:wpt_class>2026/06/07 18:45:03+00</ogr:wpt_class>
+    <ogr:filename>garmin GPSMAP 65 Software Version 460</ogr:filename>
+  </extensions>
+</wpt>
+<wpt lat="-0.631049" lon="-76.150072">
+  <magvar>6.0</magvar>
+  <name>MON13</name>
+  <type>WAYPOINT</type>
+  <extensions>
+    <ogr:ident>MON13</ogr:ident>
+    <ogr:y_proj>9930235.948999999091029</ogr:y_proj>
+    <ogr:x_proj>372024.840900000010151</ogr:x_proj>
+    <ogr:symbol>Flag</ogr:symbol>
+    <ogr:dist>Blue</ogr:dist>
+    <ogr:depth>227.74234</ogr:depth>
+    <ogr:wpt_class>2026/06/07 19:18:55+00</ogr:wpt_class>
+    <ogr:filename>garmin GPSMAP 65 Software Version 460</ogr:filename>
+  </extensions>
+</wpt>
+<wpt lat="-0.631121" lon="-76.147777">
+  <magvar>6.0</magvar>
+  <name>MON14</name>
+  <type>WAYPOINT</type>
+  <extensions>
+    <ogr:ident>MON14</ogr:ident>
+    <ogr:y_proj>9930228.046</ogr:y_proj>
+    <ogr:x_proj>372280.255</ogr:x_proj>
+    <ogr:symbol>Flag</ogr:symbol>
+    <ogr:dist>Blue</ogr:dist>
+    <ogr:depth>219.212158</ogr:depth>
+    <ogr:wpt_class>2026/06/07 19:46:33+00</ogr:wpt_class>
+    <ogr:filename>garmin GPSMAP 65 Software Version 460</ogr:filename>
+  </extensions>
+</wpt>
+<wpt lat="-0.628537" lon="-76.147755">
+  <magvar>6.0</magvar>
+  <name>MON15</name>
+  <type>WAYPOINT</type>
+  <extensions>
+    <ogr:ident>MON15</ogr:ident>
+    <ogr:y_proj>9930513.713999999687076</ogr:y_proj>
+    <ogr:x_proj>372282.640499999979511</ogr:x_proj>
+    <ogr:symbol>Flag</ogr:symbol>
+    <ogr:dist>Blue</ogr:dist>
+    <ogr:depth>235.050034</ogr:depth>
+    <ogr:wpt_class>2026/06/07 20:18:02+00</ogr:wpt_class>
+    <ogr:filename>garmin GPSMAP 65 Software Version 460</ogr:filename>
+  </extensions>
+</wpt>
+<wpt lat="-0.628679" lon="-76.149803">
+  <magvar>6.0</magvar>
+  <name>MON16</name>
+  <type>WAYPOINT</type>
+  <extensions>
+    <ogr:ident>MON16</ogr:ident>
+    <ogr:y_proj>9930497.966</ogr:y_proj>
+    <ogr:x_proj>372054.72029999998631</ogr:x_proj>
+    <ogr:symbol>Flag</ogr:symbol>
+    <ogr:dist>Blue</ogr:dist>
+    <ogr:depth>232.298569</ogr:depth>
+    <ogr:wpt_class>2026/06/07 20:41:56+00</ogr:wpt_class>
+    <ogr:filename>garmin GPSMAP 65 Software Version 460</ogr:filename>
+  </extensions>
+</wpt>
+<wpt lat="-0.626389" lon="-76.149691">
+  <magvar>6.0</magvar>
+  <name>MON17</name>
+  <type>WAYPOINT</type>
+  <extensions>
+    <ogr:ident>MON17</ogr:ident>
+    <ogr:y_proj>9930751.13399999961257</ogr:y_proj>
+    <ogr:x_proj>372067.129299999971408</ogr:x_proj>
+    <ogr:symbol>Flag</ogr:symbol>
+    <ogr:dist>Blue</ogr:dist>
+    <ogr:depth>251.41391</ogr:depth>
+    <ogr:wpt_class>2026/06/07 21:02:55+00</ogr:wpt_class>
+    <ogr:filename>garmin GPSMAP 65 Software Version 460</ogr:filename>
+  </extensions>
+</wpt>
+<wpt lat="-0.626699" lon="-76.147411">
+  <magvar>6.0</magvar>
+  <name>MON18</name>
+  <type>WAYPOINT</type>
+  <extensions>
+    <ogr:ident>MON18</ogr:ident>
+    <ogr:y_proj>9930716.917999999597669</ogr:y_proj>
+    <ogr:x_proj>372320.8799</ogr:x_proj>
+    <ogr:symbol>Flag</ogr:symbol>
+    <ogr:dist>Blue</ogr:dist>
+    <ogr:depth>244.049179</ogr:depth>
+    <ogr:wpt_class>2026/06/07 21:20:49+00</ogr:wpt_class>
+    <ogr:filename>garmin GPSMAP 65 Software Version 460</ogr:filename>
+  </extensions>
+</wpt>
+<wpt lat="-0.626366" lon="-76.145433">
+  <magvar>6.0</magvar>
+  <name>MON19</name>
+  <type>WAYPOINT</type>
+  <extensions>
+    <ogr:ident>MON19</ogr:ident>
+    <ogr:y_proj>9930753.779999999329448</ogr:y_proj>
+    <ogr:x_proj>372541.005</ogr:x_proj>
+    <ogr:symbol>Flag</ogr:symbol>
+    <ogr:dist>Blue</ogr:dist>
+    <ogr:depth>223.612198</ogr:depth>
+    <ogr:wpt_class>2026/06/07 21:40:16+00</ogr:wpt_class>
+    <ogr:filename>garmin GPSMAP 65 Software Version 460</ogr:filename>
+  </extensions>
+</wpt>
+<wpt lat="-0.628671" lon="-76.145365">
+  <magvar>6.0</magvar>
+  <name>MON20</name>
+  <type>WAYPOINT</type>
+  <extensions>
+    <ogr:ident>MON20</ogr:ident>
+    <ogr:y_proj>9930498.959000000730157</ogr:y_proj>
+    <ogr:x_proj>372548.6286</ogr:x_proj>
+    <ogr:symbol>Flag</ogr:symbol>
+    <ogr:dist>Blue</ogr:dist>
+    <ogr:depth>222.648087</ogr:depth>
+    <ogr:wpt_class>2026/06/07 21:56:43+00</ogr:wpt_class>
+    <ogr:filename>garmin GPSMAP 65 Software Version 460</ogr:filename>
+  </extensions>
+</wpt>
+</gpx>

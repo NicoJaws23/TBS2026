@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<gpx version="1.1" creator="GDAL 3.8.4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ogr="http://osgeo.org/gdal" xmlns="http://www.topografix.com/GPX/1/1" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+<metadata>
+<bounds minlat="-0.630984000000000" minlon="-76.152054000000007" maxlat="-0.624198000000000" maxlon="-76.143067000000002"/>                                     
+</metadata>
+<wpt lat="-0.630982" lon="-76.152054">
+  <extensions>
+    <ogr:WaypointID>MON1</ogr:WaypointID>
+    <ogr:utmX>371804.259000000020023</ogr:utmX>
+    <ogr:utmY>9930243.269999999552965</ogr:utmY>
+  </extensions>
+</wpt>
+<wpt lat="-0.630983" lon="-76.149808">
+  <extensions>
+    <ogr:WaypointID>MON2</ogr:WaypointID>
+    <ogr:utmX>372054.259000000020023</ogr:utmX>
+    <ogr:utmY>9930243.269999999552965</ogr:utmY>
+  </extensions>
+</wpt>
+<wpt lat="-0.630983" lon="-76.147561">
+  <extensions>
+    <ogr:WaypointID>MON3</ogr:WaypointID>
+    <ogr:utmX>372304.259000000020023</ogr:utmX>
+    <ogr:utmY>9930243.269999999552965</ogr:utmY>
+  </extensions>
+</wpt>
+<wpt lat="-0.630984" lon="-76.145315">
+  <extensions>
+    <ogr:WaypointID>MON4</ogr:WaypointID>
+    <ogr:utmX>372554.259000000020023</ogr:utmX>
+    <ogr:utmY>9930243.269999999552965</ogr:utmY>
+  </extensions>
+</wpt>
+<wpt lat="-0.630984" lon="-76.143069">
+  <extensions>
+    <ogr:WaypointID>MON5</ogr:WaypointID>
+    <ogr:utmX>372804.259000000020023</ogr:utmX>
+    <ogr:utmY>9930243.269999999552965</ogr:utmY>
+  </extensions>
+</wpt>
+<wpt lat="-0.628721" lon="-76.152054">
+  <extensions>
+    <ogr:WaypointID>MON6</ogr:WaypointID>
+    <ogr:utmX>371804.259000000020023</ogr:utmX>
+    <ogr:utmY>9930493.269999999552965</ogr:utmY>
+  </extensions>
+</wpt>
+<wpt lat="-0.628721" lon="-76.149807">
+  <extensions>
+    <ogr:WaypointID>MON7</ogr:WaypointID>
+    <ogr:utmX>372054.259000000020023</ogr:utmX>
+    <ogr:utmY>9930493.269999999552965</ogr:utmY>
+  </extensions>
+</wpt>
+<wpt lat="-0.628722" lon="-76.147561">
+  <extensions>
+    <ogr:WaypointID>MON8</ogr:WaypointID>
+    <ogr:utmX>372304.259000000020023</ogr:utmX>
+    <ogr:utmY>9930493.269999999552965</ogr:utmY>
+  </extensions>
+</wpt>
+<wpt lat="-0.628722" lon="-76.145314">
+  <extensions>
+    <ogr:WaypointID>MON9</ogr:WaypointID>
+    <ogr:utmX>372554.259000000020023</ogr:utmX>
+    <ogr:utmY>9930493.269999999552965</ogr:utmY>
+  </extensions>
+</wpt>
+<wpt lat="-0.628723" lon="-76.143068">
+  <extensions>
+    <ogr:WaypointID>MON10</ogr:WaypointID>
+    <ogr:utmX>372804.259000000020023</ogr:utmX>
+    <ogr:utmY>9930493.269999999552965</ogr:utmY>
+  </extensions>
+</wpt>
+<wpt lat="-0.62646" lon="-76.152053">
+  <extensions>
+    <ogr:WaypointID>MON11</ogr:WaypointID>
+    <ogr:utmX>371804.259000000020023</ogr:utmX>
+    <ogr:utmY>9930743.269999999552965</ogr:utmY>
+  </extensions>
+</wpt>
+<wpt lat="-0.62646" lon="-76.149807">
+  <extensions>
+    <ogr:WaypointID>MON12</ogr:WaypointID>
+    <ogr:utmX>372054.259000000020023</ogr:utmX>
+    <ogr:utmY>9930743.269999999552965</ogr:utmY>
+  </extensions>
+</wpt>
+<wpt lat="-0.626461" lon="-76.14756">
+  <extensions>
+    <ogr:WaypointID>MON13</ogr:WaypointID>
+    <ogr:utmX>372304.259000000020023</ogr:utmX>
+    <ogr:utmY>9930743.269999999552965</ogr:utmY>
+  </extensions>
+</wpt>
+<wpt lat="-0.626461" lon="-76.145314">
+  <extensions>
+    <ogr:WaypointID>MON14</ogr:WaypointID>
+    <ogr:utmX>372554.259000000020023</ogr:utmX>
+    <ogr:utmY>9930743.269999999552965</ogr:utmY>
+  </extensions>
+</wpt>
+<wpt lat="-0.626462" lon="-76.143068">
+  <extensions>
+    <ogr:WaypointID>MON15</ogr:WaypointID>
+    <ogr:utmX>372804.259000000020023</ogr:utmX>
+    <ogr:utmY>9930743.269999999552965</ogr:utmY>
+  </extensions>
+</wpt>
+<wpt lat="-0.624198" lon="-76.152053">
+  <extensions>
+    <ogr:WaypointID>MON16</ogr:WaypointID>
+    <ogr:utmX>371804.259000000020023</ogr:utmX>
+    <ogr:utmY>9930993.269999999552965</ogr:utmY>
+  </extensions>
+</wpt>
+<wpt lat="-0.624199" lon="-76.149806">
+  <extensions>
+    <ogr:WaypointID>MON17</ogr:WaypointID>
+    <ogr:utmX>372054.259000000020023</ogr:utmX>
+    <ogr:utmY>9930993.269999999552965</ogr:utmY>
+  </extensions>
+</wpt>
+<wpt lat="-0.624199" lon="-76.14756">
+  <extensions>
+    <ogr:WaypointID>MON18</ogr:WaypointID>
+    <ogr:utmX>372304.259000000020023</ogr:utmX>
+    <ogr:utmY>9930993.269999999552965</ogr:utmY>
+  </extensions>
+</wpt>
+<wpt lat="-0.6242" lon="-76.145313">
+  <extensions>
+    <ogr:WaypointID>MON19</ogr:WaypointID>
+    <ogr:utmX>372554.259000000020023</ogr:utmX>
+    <ogr:utmY>9930993.269999999552965</ogr:utmY>
+  </extensions>
+</wpt>
+<wpt lat="-0.6242" lon="-76.143067">
+  <extensions>
+    <ogr:WaypointID>MON20</ogr:WaypointID>
+    <ogr:utmX>372804.259000000020023</ogr:utmX>
+    <ogr:utmY>9930993.269999999552965</ogr:utmY>
+  </extensions>
+</wpt>
+</gpx>

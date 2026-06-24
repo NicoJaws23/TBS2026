@@ -107,4 +107,18 @@ df_latlon <- points |>
 
 write.csv(df_latlon, "C:\\Users\\Jawor\\Desktop\\TBS_2026\\DeviceWaypoints_utmLatLon.csv")
 
+p <- read_csv(file.choose())
 
+# 2. Create sf object from lon/lat (already WGS84)
+waypoints_sf <- st_as_sf(p,
+                         coords = c("Longitude", "Latitude"),
+                         crs = 4326)
+
+waypoints_sf$name <- p$ident   # <-- add this
+
+# 3. Write to GPX — 'waypoints' is the required layer name for Garmin
+st_write(waypoints_sf, "MonStationsWaypoints.gpx",
+         layer = "waypoints",
+         driver = "GPX",
+         dataset_options = "GPX_USE_EXTENSIONS=YES",
+         delete_dsn = TRUE)
