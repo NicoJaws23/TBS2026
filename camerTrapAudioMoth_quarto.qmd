@@ -1,5 +1,22 @@
-#Camera Trap Analysis#
+---
+title: "cameraTrapAudioMothData"
+author: "Nico Jaworski"
+format: html
+editor: visual
+---
 
+## TBS Species Distribution Based on Camera Trap Sightings
+
+How species respond to risk is in part determined by the distribution of predators within their environment. Spatial heterogeneity in the distribution of predation causes variation in how animals perceive risk across the landscape. I deployed a grid of camera traps paired with autonomous acoustic monitoring devices at 20 monitoring stations to investigate the distribution of terrestrial predators across the landscape. In doing so, I aimed to asses if and how lowland woolly monkeys perceive and respond to different levels of risk across their environment. Monitor stations were placed at roughly 250 meter intervals from each other, with 5 stations running east to west and 4 running north to south, covering an area of an estimate 125 hectares.
+
+Camera traps were able to document the presence of terrestrial predators and numerous prey species. Habitual use of particular locations by prey can be used as an indicator of potentially "safe" areas where risk is perceived as low.
+
+This document displays the distribution of camera trap sightings at three levels: (1) the number of times a species was captures at a monitor station (2) the number of sightings of a species each hour per day and (3) the number of days a monitor station captured a species at least once. I constructed heat maps based on the rate of captures of each species to identify potential hot spots of activity across the landscape.
+
+```{r}
+#| message: false
+#| warning: false
+#| include: false
 library(tidyverse)
 library(hms)
 library(ggplot2)
@@ -14,8 +31,6 @@ df <- read.csv(f)
 
 g <- "https://raw.githubusercontent.com/NicoJaws23/TBS2026/refs/heads/main/RealMonWaypoints.csv"
 wp <- read.csv(g)
-wp <- wp|>
-  rename(MonitorID = WaypointID)
 
 df$Time <- as_hms(paste0(df$Time, ":00"))
 
@@ -60,8 +75,14 @@ df$ScientificName <- recode(df$ScientificName,
 df_species <- df[df$ScientificName != "N/A", ]
 
 df_full <- left_join(df, wp, by = "MonitorID")
+```
 
-###Summarise total number of detections seen across ALL VIDEOS by species name####
+## Total Captures per Species
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
 species_summary <- df_species %>%
   group_by(MonitorID, ScientificName) %>%
   summarise(TotalDetections = n(), .groups = "drop")
@@ -170,121 +191,14 @@ for (sp in species_list) {
 map_1 <- map_1 %>% hideGroup(species_list)
 
 map_1
+```
 
-#Sitings of number of individuals of species by day by monitor####
-df_uniqueSite <- df_full |>
-  distinct(MonitorID, Date, ScientificName, .keep_all = TRUE) |>
-  filter(ScientificName != "N/A")
+## Total Captures Per Hour Per Day
 
-uniqueSiteSummary <- df_uniqueSite |>
-  group_by(MonitorID, ScientificName) |>
-  summarise(TotalDetectionDays = n(), .groups = "drop")
-
-uniqueSiteSummary <- left_join(uniqueSiteSummary, wp, by = "MonitorID")
-
-ggplot(uniqueSiteSummary, mapping = aes(x = ScientificName, y = TotalDetectionDays)) +
-  geom_col() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-species_list_2 <- sort(unique(uniqueSiteSummary$ScientificName))
-
-color_palette <- colorFactor(
-  palette = "Set3",       # try also "Set1", "Set2", "Dark2", or "Paired"
-  domain  = species_list_2
-)
-
-expand_for_heatmap_2 <- function(data) {
-  data[rep(seq_len(nrow(data)), times = data$TotalDetectionDays), ]
-}
-
-map_2Title<- tags$div(
-  tag.map.title <- tags$style(HTML(".leaflet-control.map-title {
-                                   background: rgba(255, 255, 255, 0.9);
-                                   padding: 10px;
-                                   font-weight: bold;
-                                   font_size: 20px
-                                   border-radius: 5px;
-                                   }")),
-  HTML("Total Number of Detections Per Species Per Day Per Monitor")
-)
-
-map_2 <- leaflet() |>
-  addProviderTiles(providers$Esri.WorldImagery, group = "Satellite") |>
-  addProviderTiles(providers$OpenStreetMap,     group = "Street Map") |>
-  
-  # ── Static layers ────────────────────────────────────────────────────────────
-  addPolylines(
-    data   = trails,
-    color  = "black",
-    weight = 2,
-    group  = "Trails",
-    label  = "Trails"
-  ) |>
-  addPolylines(
-    data   = river,
-    color  = "blue",
-    weight = 2,
-    group  = "River",
-    label  = "River"
-  ) |>
-  addControl(
-    html = map_2Title,
-    position = "topright",
-    className = "map-title"
-  ) |>
-  addControl(
-    html = north_arrow_html,
-    position = "topright"
-  ) |>
-  addScaleBar(
-    position = "bottomleft",
-    options = scaleBarOptions(metric = TRUE, imperial = FALSE)
-  ) |>
-  addLayersControl(
-    baseGroups    = c("Satellite", "Street Map"),
-    overlayGroups = c("Trails", "River", species_list),
-    options       = layersControlOptions(collapsed = TRUE)
-  )
-
-for (sp in species_list) {
-  
-  sp_data     <- uniqueSiteSummary %>% filter(ScientificName == sp)
-  sp_expanded <- expand_for_heatmap_2(sp_data)
-  sp_color    <- color_palette(sp)   # unique color for this species
-  
-  map_2 <- map_2 %>%
-    addHeatmap(
-      data   = sp_expanded,
-      lat    = ~lat,
-      lng    = ~lon,
-      blur   = 30,
-      max    = 1,
-      radius = 25,
-      group  = sp
-    ) %>%
-    addCircleMarkers(
-      data        = sp_data,
-      lat         = ~lat,
-      lng         = ~lon,
-      radius      = ~scales::rescale(TotalDetectionDays, to = c(3, 12)),
-      color       = "white",
-      fillColor   = sp_color,
-      fillOpacity = 0.8,
-      weight      = 1,
-      popup       = ~paste0(
-        "<b>", ScientificName, "</b><br>",
-        "Monitor: ", MonitorID, "<br>",
-        "Detection Days: ", TotalDetectionDays
-      ),
-      group = sp
-    )
-}
-
-map_2 <- map_2 %>% hideGroup(species_list)
-
-map_2
-
-#Sitings of number of individuals of species by monitor by day by hour####
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
 df_hourly <- df_species |>
   mutate(Hour = format(as.POSIXct(paste("2000-01-01", Time), format = "%Y-%m-%d %H:%M"), "%H")) |>
   distinct(MonitorID, ScientificName, Date, Hour, .keep_all = TRUE)
@@ -396,4 +310,123 @@ for (sp in species_list_3) {   # also fix: use species_list_3, not species_list
 map_3 <- map_3 %>% hideGroup(species_list)
 
 map_3
+```
 
+## Total Daily Captures Per Monitor
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+df_uniqueSite <- df_full |>
+  distinct(MonitorID, Date, ScientificName, .keep_all = TRUE) |>
+  filter(ScientificName != "N/A")
+
+uniqueSiteSummary <- df_uniqueSite |>
+  group_by(MonitorID, ScientificName) |>
+  summarise(TotalDetectionDays = n(), .groups = "drop")
+
+uniqueSiteSummary <- left_join(uniqueSiteSummary, wp, by = "MonitorID")
+
+ggplot(uniqueSiteSummary, mapping = aes(x = ScientificName, y = TotalDetectionDays)) +
+  geom_col() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+species_list_2 <- sort(unique(uniqueSiteSummary$ScientificName))
+
+color_palette <- colorFactor(
+  palette = "Set3",       # try also "Set1", "Set2", "Dark2", or "Paired"
+  domain  = species_list_2
+)
+
+expand_for_heatmap_2 <- function(data) {
+  data[rep(seq_len(nrow(data)), times = data$TotalDetectionDays), ]
+}
+
+map_2Title<- tags$div(
+  tag.map.title <- tags$style(HTML(".leaflet-control.map-title {
+                                   background: rgba(255, 255, 255, 0.9);
+                                   padding: 10px;
+                                   font-weight: bold;
+                                   font_size: 20px
+                                   border-radius: 5px;
+                                   }")),
+  HTML("Total Number of Detections Per Species Per Day Per Monitor")
+)
+
+map_2 <- leaflet() |>
+  addProviderTiles(providers$Esri.WorldImagery, group = "Satellite") |>
+  addProviderTiles(providers$OpenStreetMap,     group = "Street Map") |>
+  
+  # ── Static layers ────────────────────────────────────────────────────────────
+  addPolylines(
+    data   = trails,
+    color  = "black",
+    weight = 2,
+    group  = "Trails",
+    label  = "Trails"
+  ) |>
+  addPolylines(
+    data   = river,
+    color  = "blue",
+    weight = 2,
+    group  = "River",
+    label  = "River"
+  ) |>
+  addControl(
+    html = map_2Title,
+    position = "topright",
+    className = "map-title"
+  ) |>
+  addControl(
+    html = north_arrow_html,
+    position = "topright"
+  ) |>
+  addScaleBar(
+    position = "bottomleft",
+    options = scaleBarOptions(metric = TRUE, imperial = FALSE)
+  ) |>
+  addLayersControl(
+    baseGroups    = c("Satellite", "Street Map"),
+    overlayGroups = c("Trails", "River", species_list),
+    options       = layersControlOptions(collapsed = TRUE)
+  )
+
+for (sp in species_list) {
+  
+  sp_data     <- uniqueSiteSummary %>% filter(ScientificName == sp)
+  sp_expanded <- expand_for_heatmap_2(sp_data)
+  sp_color    <- color_palette(sp)   # unique color for this species
+  
+  map_2 <- map_2 %>%
+    addHeatmap(
+      data   = sp_expanded,
+      lat    = ~lat,
+      lng    = ~lon,
+      blur   = 30,
+      max    = 1,
+      radius = 25,
+      group  = sp
+    ) %>%
+    addCircleMarkers(
+      data        = sp_data,
+      lat         = ~lat,
+      lng         = ~lon,
+      radius      = ~scales::rescale(TotalDetectionDays, to = c(3, 12)),
+      color       = "white",
+      fillColor   = sp_color,
+      fillOpacity = 0.8,
+      weight      = 1,
+      popup       = ~paste0(
+        "<b>", ScientificName, "</b><br>",
+        "Monitor: ", MonitorID, "<br>",
+        "Detection Days: ", TotalDetectionDays
+      ),
+      group = sp
+    )
+}
+
+map_2 <- map_2 %>% hideGroup(species_list)
+
+map_2
+```
