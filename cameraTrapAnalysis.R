@@ -8,9 +8,11 @@ library(leaflet)
 library(leaflet.extras)
 
 #Reading in number of sightings data, waypoint data, joinging####
-df <- read.csv(file.choose())
+f <- "https://raw.githubusercontent.com/NicoJaws23/TBS2026/refs/heads/main/RecordOfSightings.csv"
+df <- read.csv(f)
 
-wp <- read.csv(file.choose())
+g <- "https://raw.githubusercontent.com/NicoJaws23/TBS2026/refs/heads/main/RealMonWaypoints.csv"
+wp <- read.csv(g)
 wp <- wp|>
   rename(MonitorID = WaypointID)
 
