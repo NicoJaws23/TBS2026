@@ -21,7 +21,7 @@ library(fs)  # Optional but helpful; base R works too
 # ── Configuration ──────────────────────────────────────────────────────────────
 
 # Set your root deployment folder (use forward slashes or double backslashes)
-root_dir <- "D:/TBS_MonitorFiles_Deployment2"
+root_dir <- "E:/TBS_MonitorFiles_Deployment3"
 
 # File extension to target (case-insensitive)
 target_ext <- "\\.mp4$"
@@ -102,7 +102,7 @@ library(exifr)
 
 # ── Configuration ──────────────────────────────────────────────────────────────
 
-root_dir <- "D:/TBS_MonitorFiles_Deployment2"
+root_dir <- "E:/TBS_MonitorFiles_Deployment3"
 
 utc_offset_hours <- -5   # Ecuador = UTC-5, adjust here if ever needed
 
@@ -206,7 +206,7 @@ print(head(camera_df, 10))
 # ── Export ─────────────────────────────────────────────────────────────────────
 
 # Uncomment to save:
-write.csv(camera_df, "D:/camera_trap_metadata_DP2.csv", row.names = FALSE)
+write.csv(camera_df, "E:/camera_trap_metadata_D3.csv", row.names = FALSE)
 
 # Replace with the full path of one file you know the correct time for
 test_file <- "D:/TBS_MonitorFiles_Deployment1/MON01/CameraTrapFiles/MON01_DP20260607TO20260614_CameraTrap_NWJ20/MON01_DP20260607TO20260614_CameraTrap_NWJ20_DSCF0027.MP4"
@@ -407,3 +407,133 @@ test_file <- "D:/TBS_MonitorFiles_Deployment1/MON01/AudioMothFiles/MON01_DP20260
 
 info <- av_media_info(test_file)
 print(info)
+
+#Deleting non-sighting videos####
+# =============================================================================
+# Camera Trap Video Filter
+# =============================================================================
+# Reads a CSV of MonitorID (folder path) + VideoID (filename without extension)
+# and DELETES all .mp4 files in those folders that are NOT in the list.
+#
+# CSV format expected:
+#   MonitorID  - full path to the folder containing the video files
+#   VideoID    - filename WITHOUT extension (e.g. "DSCF0008")
+#
+# SAFETY FEATURES:
+#   - Dry-run mode (default ON): prints what would be deleted without deleting
+#   - Summary printed before any deletion occurs
+#   - Only touches folders that appear in the CSV (no wider filesystem access)
+#   - Only targets .mp4 files (case-insensitive)
+# =============================================================================
+
+# ── USER SETTINGS ─────────────────────────────────────────────────────────────
+
+DRY_RUN <- FALSE   # Set to FALSE to actually delete files
+
+# ── LOAD CSV ──────────────────────────────────────────────────────────────────
+
+library(tidyverse)
+
+# Opens a file browser dialog to select your CSV
+sightings <- read_csv(file.choose())
+
+# Validate expected columns
+required_cols <- c("MonitorID", "VideoID")
+missing_cols  <- setdiff(required_cols, names(sightings))
+if (length(missing_cols) > 0) {
+  stop("CSV is missing required columns: ", paste(missing_cols, collapse = ", "))
+}
+
+cat("=== Camera Trap Video Filter ===\n")
+cat("CSV loaded:", nrow(sightings), "rows\n\n")
+
+# ── BUILD KEEP LIST ───────────────────────────────────────────────────────────
+# Key: normalised folder path → set of VideoIDs to keep (without extension)
+
+# Normalise folder paths (consistent separators, no trailing slash)
+sightings$folder_norm <- normalizePath(sightings$MonitorID,
+                                       winslash = "/",
+                                       mustWork = FALSE)
+
+keep_list <- split(sightings$VideoID, sightings$folder_norm)
+# For each folder, store as a lower-cased set for case-insensitive matching
+keep_list <- lapply(keep_list, tolower)
+
+unique_folders <- names(keep_list)
+cat("Unique folders in CSV:", length(unique_folders), "\n\n")
+
+# ── SCAN FOLDERS AND IDENTIFY FILES TO DELETE ─────────────────────────────────
+
+to_delete  <- character(0)
+to_keep    <- character(0)
+not_found  <- character(0)   # folders in CSV that don't exist on disk
+
+for (folder in unique_folders) {
+  
+  if (!dir.exists(folder)) {
+    warning("Folder not found on disk (skipping): ", folder)
+    not_found <- c(not_found, folder)
+    next
+  }
+  
+  # List all .mp4 files in the folder (non-recursive; adjust if needed)
+  mp4_files <- list.files(folder,
+                          pattern     = "\\.mp4$",
+                          ignore.case = TRUE,
+                          full.names  = TRUE,
+                          recursive   = FALSE)
+  
+  if (length(mp4_files) == 0) {
+    cat("  [no .mp4 files found]", folder, "\n")
+    next
+  }
+  
+  # Extract bare filename without extension for comparison
+  basenames <- tolower(tools::file_path_sans_ext(basename(mp4_files)))
+  
+  keep_ids  <- keep_list[[folder]]
+  
+  for (i in seq_along(mp4_files)) {
+    if (basenames[i] %in% keep_ids) {
+      to_keep <- c(to_keep, mp4_files[i])
+    } else {
+      to_delete <- c(to_delete, mp4_files[i])
+    }
+  }
+}
+
+# ── SUMMARY ───────────────────────────────────────────────────────────────────
+
+cat("\n--- Summary ---\n")
+cat("Files to KEEP  :", length(to_keep),  "\n")
+cat("Files to DELETE:", length(to_delete), "\n")
+if (length(not_found) > 0) {
+  cat("Folders missing on disk:", length(not_found), "\n")
+  cat(paste(" ", not_found, collapse = "\n"), "\n")
+}
+
+if (length(to_delete) > 0) {
+  cat("\nFiles that will be deleted:\n")
+  cat(paste(" ", to_delete, collapse = "\n"), "\n")
+}
+
+# ── DELETE (or dry-run) ────────────────────────────────────────────────────────
+
+if (DRY_RUN) {
+  cat("\n[DRY RUN] No files were deleted.\n")
+  cat("Set DRY_RUN <- FALSE at the top of the script to perform actual deletion.\n")
+} else {
+  if (length(to_delete) == 0) {
+    cat("\nNothing to delete — all .mp4 files in listed folders are on the keep list.\n")
+  } else {
+    cat("\nDeleting", length(to_delete), "files...\n")
+    results <- file.remove(to_delete)
+    n_ok    <- sum(results)
+    n_fail  <- sum(!results)
+    cat("  Deleted successfully:", n_ok, "\n")
+    if (n_fail > 0) {
+      cat("  FAILED to delete:", n_fail, "\n")
+      cat(paste(" ", to_delete[!results], collapse = "\n"), "\n")
+    }
+  }
+}
