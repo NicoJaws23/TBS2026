@@ -246,9 +246,9 @@ library(av)
 
 # ── Configuration ──────────────────────────────────────────────────────────────
 
-root_dir  <- "D:/TBS_MonitorFiles_Deployment2"
+root_dir  <- "D:/TBS_MonitorFiles_Deployment3"
 dry_run   <- FALSE
-csv_out   <- "D:/audiomoth_metadata_DP2.csv"
+csv_out   <- "D:/audiomoth_metadata_DP3.csv"
 
 # NOTE: utc_offset_hours removed — AudioMoth is already configured to local time
 
