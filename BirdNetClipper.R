@@ -15,8 +15,8 @@
 library(tuneR)
 
 # ---- USER SETTINGS -------------------------------------------------------
-AUDIO_DIR   <- "C:\\Users\\Jawor\\Desktop\\Research\\BirdNet\\outputs\\trainingPt2\\Recordings"          # folder with .wav files
-SELTAB_DIR  <- "C:\\Users\\Jawor\\Desktop\\Research\\BirdNet\\outputs\\trainingPt2\\SelectionTables"    # folder with Raven selection tables
+AUDIO_DIR   <- "C:\\Users\\Jawor\\Desktop\\Research\\BirdNet\\wavFilesForTrainingDataNormalized"          # folder with .wav files
+SELTAB_DIR  <- "C:\\Users\\Jawor\\Desktop\\Research\\BirdNet\\outputs\\trainingPt3"    # folder with Raven selection tables
 OUTPUT_DIR  <- "C:\\Users\\Jawor\\Desktop\\Research\\BirdNet\\TrainingData"              # parent folder containing VAB/, VCH/, VTR/ etc.
 CALL_COL    <- "Annotation"                   # name of your 3-letter code column
 SEL_DELIM   <- "\t"                          # "\t" for Raven's default tab-delimited .txt export, "," if you ever use CSV
