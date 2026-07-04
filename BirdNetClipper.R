@@ -1,3 +1,4 @@
+
 # ==========================================================================
 # Batch-clip Raven selections into folders by vocalization type
 #
@@ -14,13 +15,17 @@
 library(tuneR)
 
 # ---- USER SETTINGS -------------------------------------------------------
-AUDIO_DIR   <- "C:\\Users\\Jawor\\Desktop\\TBS_2026\\VXX_Recordings"          # folder with .wav files
-SELTAB_DIR  <- "C:\\Users\\Jawor\\Desktop\\TBS_2026\\SelectionTables"    # folder with Raven selection tables
+AUDIO_DIR   <- "C:\\Users\\Jawor\\Desktop\\Research\\BirdNet\\outputs\\trainingPt2\\Recordings"          # folder with .wav files
+SELTAB_DIR  <- "C:\\Users\\Jawor\\Desktop\\Research\\BirdNet\\outputs\\trainingPt2\\SelectionTables"    # folder with Raven selection tables
 OUTPUT_DIR  <- "C:\\Users\\Jawor\\Desktop\\Research\\BirdNet\\TrainingData"              # parent folder containing VAB/, VCH/, VTR/ etc.
 CALL_COL    <- "Annotation"                   # name of your 3-letter code column
 SEL_DELIM   <- "\t"                          # "\t" for Raven's default tab-delimited .txt export, "," if you ever use CSV
 NORMALIZE   <- TRUE                          # TRUE = peak-normalize every clip after cutting
 NORM_BITS   <- "16"                          # target bit depth for normalization ("16", "24", "32", or "1" for float [-1,1])
+
+NORMALIZE_ANALYSIS_AUDIO <- TRUE             # TRUE = also normalize the full recordings you'll run BirdNET on
+ANALYSIS_AUDIO_DIR        <- "C:\\Users\\Jawor\\Desktop\\Research\\BirdNet\\wavFilesForTrainingData"        # folder with your original 9-minute recordings
+ANALYSIS_AUDIO_OUTPUT_DIR <- "C:\\Users\\Jawor\\Desktop\\Research\\BirdNet\\wavFilesForTrainingDataNormalized"  # normalized copies go here -- originals are left untouched
 # ---------------------------------------------------------------------------
 
 # Match each selection table to its recording by shared filename stem
@@ -28,10 +33,13 @@ audio_files  <- list.files(AUDIO_DIR, pattern = "\\.wav$", full.names = TRUE, ig
 seltab_files <- list.files(SELTAB_DIR, pattern = "\\.(csv|txt)$", full.names = TRUE, ignore.case = TRUE)
 
 get_stem <- function(path) {
-  # Grabs the recording name portion before Raven's ".Table.1.selections" suffix,
-  # adjust the regex if your naming convention differs
-  base <- tools::file_path_sans_ext(basename(path))
-  sub("\\.Table\\..*$", "", base)
+  # Takes everything before the FIRST dot in the filename, so it works
+  # regardless of how the selection table names the rest
+  # (e.g. "ZOOM0077.WAV" -> "ZOOM0077",
+  #  "ZOOM0077.BirdNET.selection.table.txt" -> "ZOOM0077",
+  #  "ZOOM0073.Table.1.selections.txt" -> "ZOOM0073")
+  base <- basename(path)
+  sub("\\..*$", "", base)
 }
 
 audio_stems  <- sapply(audio_files, get_stem)
@@ -72,6 +80,9 @@ for (i in seq_along(seltab_files)) {
     begin_s <- sel[["Begin Time (s)"]][j]
     end_s   <- sel[["End Time (s)"]][j]
     call    <- trimws(sel[[CALL_COL]][j])
+    
+    # Fix known typo: some selections were mislabeled VBA instead of VAB
+    if (call == "VBA") call <- "VAB"
     
     if (is.na(begin_s) || is.na(end_s) || call == "") {
       warning("Skipping row ", j, " in ", basename(sel_path), " (missing time or call code)")
@@ -133,6 +144,45 @@ if (NORMALIZE) {
   }
   
   cat("\nNormalization complete.\n")
+}
+
+# ==========================================================================
+# Post-processing: peak-normalize the full recordings you'll run through
+# BirdNET for analysis (kept separate from training clips, and never
+# overwrites your original field recordings)
+# ==========================================================================
+if (NORMALIZE_ANALYSIS_AUDIO) {
+  
+  cat("\nNormalizing full analysis recordings...\n")
+  
+  if (!dir.exists(ANALYSIS_AUDIO_OUTPUT_DIR)) {
+    dir.create(ANALYSIS_AUDIO_OUTPUT_DIR, recursive = TRUE)
+  }
+  
+  analysis_files <- list.files(ANALYSIS_AUDIO_DIR, pattern = "\\.wav$", full.names = TRUE, ignore.case = TRUE)
+  
+  if (length(analysis_files) == 0) {
+    warning("No .wav files found in ANALYSIS_AUDIO_DIR: ", ANALYSIS_AUDIO_DIR)
+  }
+  
+  for (rec_path in analysis_files) {
+    
+    rec <- tryCatch(readWave(rec_path), error = function(e) NULL)
+    
+    if (is.null(rec)) {
+      warning("Could not read recording, skipping: ", rec_path)
+      next
+    }
+    
+    norm_rec <- normalize(rec, unit = NORM_BITS)
+    
+    out_path <- file.path(ANALYSIS_AUDIO_OUTPUT_DIR, basename(rec_path))
+    writeWave(norm_rec, out_path)
+    cat("  Normalized:", basename(rec_path), "->", out_path, "\n")
+  }
+  
+  cat("\nAnalysis recording normalization complete. Originals in ", ANALYSIS_AUDIO_DIR,
+      " were left untouched -- use the copies in ", ANALYSIS_AUDIO_OUTPUT_DIR, " for BirdNET.\n", sep = "")
 }
 
 cat("\nDone.\n")
