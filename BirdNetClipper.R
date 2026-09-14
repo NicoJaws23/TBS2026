@@ -15,8 +15,8 @@
 library(tuneR)
 
 # ---- USER SETTINGS -------------------------------------------------------
-AUDIO_DIR   <- "C:\\Users\\Jawor\\Desktop\\Research\\BirdNet\\wavFilesForTrainingDataNormalized"          # folder with .wav files
-SELTAB_DIR  <- "C:\\Users\\Jawor\\Desktop\\Research\\BirdNet\\outputs\\trainingPt3"    # folder with Raven selection tables
+AUDIO_DIR   <- "C:\\Users\\Jawor\\Desktop\\TBS_2026\\VXX_Recordings\\2026-07-11"          # folder with .wav files
+SELTAB_DIR  <- "C:\\Users\\Jawor\\Desktop\\TBS_2026\\VXX_Recordings\\2026-07-11\\selectionTables"    # folder with Raven selection tables
 OUTPUT_DIR  <- "C:\\Users\\Jawor\\Desktop\\Research\\BirdNet\\TrainingData"              # parent folder containing VAB/, VCH/, VTR/ etc.
 CALL_COL    <- "Annotation"                   # name of your 3-letter code column
 SEL_DELIM   <- "\t"                          # "\t" for Raven's default tab-delimited .txt export, "," if you ever use CSV
@@ -24,8 +24,8 @@ NORMALIZE   <- TRUE                          # TRUE = peak-normalize every clip 
 NORM_BITS   <- "16"                          # target bit depth for normalization ("16", "24", "32", or "1" for float [-1,1])
 
 NORMALIZE_ANALYSIS_AUDIO <- TRUE             # TRUE = also normalize the full recordings you'll run BirdNET on
-ANALYSIS_AUDIO_DIR        <- "C:\\Users\\Jawor\\Desktop\\Research\\BirdNet\\wavFilesForTrainingData"        # folder with your original 9-minute recordings
-ANALYSIS_AUDIO_OUTPUT_DIR <- "C:\\Users\\Jawor\\Desktop\\Research\\BirdNet\\wavFilesForTrainingDataNormalized"  # normalized copies go here -- originals are left untouched
+ANALYSIS_AUDIO_DIR        <- "C:\\Users\\Jawor\\Desktop\\Research\\BirdNet\\wavFilesForTrainingDataPt2"        # folder with your original 9-minute recordings
+ANALYSIS_AUDIO_OUTPUT_DIR <- "C:\\Users\\Jawor\\Desktop\\Research\\BirdNet\\wavFilesForTrainingDataPt2Normalized"  # normalized copies go here -- originals are left untouched
 # ---------------------------------------------------------------------------
 
 # Match each selection table to its recording by shared filename stem

@@ -21,7 +21,7 @@ library(fs)  # Optional but helpful; base R works too
 # ── Configuration ──────────────────────────────────────────────────────────────
 
 # Set your root deployment folder (use forward slashes or double backslashes)
-root_dir <- "E:/TBS_MonitorFiles_Deployment3"
+root_dir <- "D:/TBS_MonitorFiles_Deployment4"
 
 # File extension to target (case-insensitive)
 target_ext <- "\\.mp4$"
@@ -102,7 +102,7 @@ library(exifr)
 
 # ── Configuration ──────────────────────────────────────────────────────────────
 
-root_dir <- "E:/TBS_MonitorFiles_Deployment3"
+root_dir <- "D:/TBS_MonitorFiles_Deployment4"
 
 utc_offset_hours <- -5   # Ecuador = UTC-5, adjust here if ever needed
 
@@ -206,7 +206,7 @@ print(head(camera_df, 10))
 # ── Export ─────────────────────────────────────────────────────────────────────
 
 # Uncomment to save:
-write.csv(camera_df, "E:/camera_trap_metadata_D3.csv", row.names = FALSE)
+write.csv(camera_df, "D:/camera_trap_metadata_D4.csv", row.names = FALSE)
 
 # Replace with the full path of one file you know the correct time for
 test_file <- "D:/TBS_MonitorFiles_Deployment1/MON01/CameraTrapFiles/MON01_DP20260607TO20260614_CameraTrap_NWJ20/MON01_DP20260607TO20260614_CameraTrap_NWJ20_DSCF0027.MP4"
