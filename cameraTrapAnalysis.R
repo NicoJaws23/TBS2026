@@ -26,6 +26,16 @@ df <- df|>
 
 df_full <- left_join(df, wp, by = "MonitorID")
 
+dfSpeciesSplit <- df_full %>%
+  mutate(ScientificName = na_if(ScientificName, "N/A")) %>%
+  separate(
+    ScientificName,
+    into = c("Genus", "Species"),
+    sep = " ",
+    remove = FALSE,
+    extra = "merge",
+    fill = "right"
+  )  
 trails <- st_read("https://raw.githubusercontent.com/NicoJaws23/creative-data-visualization/refs/heads/main/TBS_Trails.geojson") |>
   st_transform(4326)
 river <- st_read("https://raw.githubusercontent.com/NicoJaws23/creative-data-visualization/refs/heads/main/rio_tiputini.geojson") |>
@@ -60,16 +70,28 @@ df$ScientificName <- recode(df$ScientificName,
 
 df_species <- df[df$ScientificName != "N/A", ]
 
-df_full <- left_join(df, wp, by = "MonitorID")
+dfSpeciesSplit <- df_species %>%
+  mutate(ScientificName = na_if(ScientificName, "N/A")) %>%
+  separate(
+    ScientificName,
+    into = c("Genus", "Species"),
+    sep = " ",
+    remove = FALSE,
+    extra = "merge",
+    fill = "right"
+  )  
+
+
+df_full <- left_join(dfSpeciesSplit, wp, by = "MonitorID")
 
 ###Summarise total number of detections seen across ALL VIDEOS by species name####
-species_summary <- df_species %>%
-  group_by(MonitorID, ScientificName) %>%
+species_summary <- df_full %>%
+  group_by(MonitorID, Genus) %>%
   summarise(TotalDetections = n(), .groups = "drop")
 
 species_summary <- left_join(species_summary, wp, by = "MonitorID")
 
-ggplot(species_summary, mapping = aes(x = ScientificName, y = TotalDetections)) +
+ggplot(species_summary, mapping = aes(x = Genus, y = TotalDetections)) +
   geom_col() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
@@ -79,7 +101,7 @@ expand_for_heatmap_1 <- function(data) {
   data[rep(seq_len(nrow(data)), times = data$TotalDetections), ]
 }
 
-species_list <- sort(unique(species_summary$ScientificName))
+species_list <- sort(unique(species_summary$Genus))
 
 color_palette <- colorFactor(
   palette = "Set3",       # try also "Set1", "Set2", "Dark2", or "Paired"
@@ -136,7 +158,7 @@ map_1 <- leaflet() %>%
 
 for (sp in species_list) {
   
-  sp_data     <- species_summary %>% filter(ScientificName == sp)
+  sp_data     <- species_summary %>% filter(Genus == sp)
   sp_expanded <- expand_for_heatmap_1(sp_data)
   sp_color    <- color_palette(sp)   # unique color for this species
   
@@ -160,7 +182,7 @@ for (sp in species_list) {
       fillOpacity = 0.8,
       weight      = 1,
       popup       = ~paste0(
-        "<b>", ScientificName, "</b><br>",
+        "<b>", Genus, "</b><br>",
         "Monitor: ", MonitorID, "<br>",
         "Detections: ", TotalDetections
       ),
