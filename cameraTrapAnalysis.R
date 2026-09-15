@@ -14,8 +14,9 @@ df <- read.csv(f)
 
 g <- "https://raw.githubusercontent.com/NicoJaws23/TBS2026/refs/heads/main/RealMonWaypoints.csv"
 wp <- read.csv(g)
-wp <- wp|>
-  rename(MonitorID = WaypointID)
+
+df <- df %>%
+  filter(if_any(-NeedsReview, ~ !is.na(.x) & .x != ""))
 
 df$Time <- as_hms(paste0(df$Time, ":00"))
 
