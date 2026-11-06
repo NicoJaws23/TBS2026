@@ -66,6 +66,7 @@ df$ScientificName <- recode(df$ScientificName,
                             "Eira Barbara"             = "Eira barbara",
                             "Nasua Nasua"              = "Nasua nasua",
                             "Dasypus Novemcinctus"     = "Dasypus novemcinctus",
+                            "Cuniculus Paca"           = "Cuniculus paca",
                             
                             # Typo fixes
                             "Lepardus paradalis"       = "Leopardus pardalis",

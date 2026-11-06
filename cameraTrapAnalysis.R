@@ -51,6 +51,8 @@ north_arrow_html <- tags$div(
 
 df$ScientificName <- trimws(df$ScientificName)  # removes leading/trailing spaces (fixes Leptotilla)
 
+unique(df$ScientificName)
+
 df$ScientificName <- recode(df$ScientificName,
                             # Capitalisation fixes
                             "Leptotilla Rufaxilla"     = "Leptotilla rufaxilla",
@@ -59,6 +61,7 @@ df$ScientificName <- recode(df$ScientificName,
                             "Eira Barbara"             = "Eira barbara",
                             "Nasua Nasua"              = "Nasua nasua",
                             "Dasypus Novemcinctus"     = "Dasypus novemcinctus",
+                            "Cuniculus Paca"           = "Cuniculus paca",
                             
                             # Typo fixes
                             "Lepardus paradalis"       = "Leopardus pardalis",
@@ -68,6 +71,10 @@ df$ScientificName <- recode(df$ScientificName,
                             "Cryptullerus soui"        = "Crypturellus soui"
 )
 
+df_species[df_species == ""] <- NA
+df_species <- df[df$ScientificName != "N/A", ]
+
+df_species[df_species == ""] <- NA
 df_species <- df[df$ScientificName != "N/A", ]
 
 dfSpeciesSplit <- df_species %>%
@@ -84,15 +91,51 @@ dfSpeciesSplit <- df_species %>%
 
 df_full <- left_join(dfSpeciesSplit, wp, by = "MonitorID")
 
+df_full <- df_full |>
+  mutate(
+    pred_or_prey = if_else(Genus %in% c("Panthera", "Puma", "Leopardus", "Eira"),
+                           "pred", "prey"),
+    order = case_match(Genus,
+                       c("Ateles", "Cebus") ~ "Primates",
+                       "Chelonoidis" ~ "Testudines",
+                       c("Crypturellus", "Tinamus") ~ "Tinamiformes",
+                       c("Cuniculus", "Dasyprocta", "Hadrosciurus", "Hydrochoerus", "Myoprocta") ~ "Rodentia",
+                       c("Dasypus", "Priodontes") ~ "Cingulata",
+                       c("Dicotyles", "Mazama") ~ "Artiodactyla",
+                       c("Didelphis", "Philander") ~ "Didelphimorphia",
+                       c("Eira", "Leopardus", "Nasua", "Panthera", "Puma", "Speothos") ~ "Carnivora",
+                       "Leptotilla" ~ "Columbiformes",
+                       c("Mitu", "Nothocrax", "Odontophorus", "Penelope") ~ "Galliformes",
+                       "Psophia" ~ "Gruiformes",
+                       "Tamandua" ~ "Pilosa",
+                       "Tapirus" ~ "Perissodactyla"
+    )
+  )
+
 ###Summarise total number of detections seen across ALL VIDEOS by species name####
+df_full <- na.omit(df_full)
+
 species_summary <- df_full %>%
-  group_by(MonitorID, Genus) %>%
+  group_by(Genus) %>%
   summarise(TotalDetections = n(), .groups = "drop")
+
+order_summary <- df_full |>
+  group_by(order) |>
+  summarise(TotalDetections = n(), .groups = "drop")
+
+predprey <- df_full |>
+  filter(pred_or_prey == "pred") #|>
+  #group_by(order) |>
+  #summarise(count = n())
 
 species_summary <- left_join(species_summary, wp, by = "MonitorID")
 
-ggplot(species_summary, mapping = aes(x = Genus, y = TotalDetections)) +
+ggplot(df_full, mapping = aes(x = Genus, y = TotalDetections)) +
   geom_col() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+ggplot(df_full, aes(x = order)) +
+  geom_bar() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 #Heatmaps with leaflet#
@@ -420,3 +463,4 @@ map_3 <- map_3 %>% hideGroup(species_list)
 
 map_3
 
+write.csv(df_full, "sightings.csv")
